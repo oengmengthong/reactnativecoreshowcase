@@ -107,6 +107,33 @@ This app showcases everything that React Native offers out-of-the-box, including
 - 🟡 **Platform demos**: Partially complete (3/8)
 - 🔴 **Utility demos**: Not started (0/2)
 
+## App Icon Generation
+
+This project includes automated app icon generation for both iOS and Android platforms.
+
+### Quick Start
+
+```bash
+# Check if your system is ready for icon generation
+npm run check-icon-setup
+
+# Generate icons from app-icon.png
+npm run generate-icons
+```
+
+### Requirements
+
+- **macOS**: Install ImageMagick via `brew install imagemagick`
+- **Windows**: Download ImageMagick from official website and add to PATH
+- **Source Image**: 1024x1024 PNG file named `app-icon.png`
+
+### Generated Files
+
+- **iOS**: `ios/ReactNativeCoreShowcase/Images.xcassets/AppIcon.appiconset/` (25 icon sizes)
+- **Android**: `android/app/src/main/res/mipmap-*/` (12 icons across 6 densities)
+
+For detailed instructions including Windows setup, see [APP_ICON_GENERATOR.md](./APP_ICON_GENERATOR.md).
+
 ## Contributing
 
 This project demonstrates React Native's built-in capabilities. When adding new demos:
