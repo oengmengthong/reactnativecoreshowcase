@@ -48,11 +48,11 @@ It captures **everything React Native offers out‑of‑the‑box** (no Expo�
 
 ## 3  Out‑of‑scope (must NOT appear)
 
-* Navigation libraries (`react‑navigation`, `react‑native‑navigation`, etc.)
-  *→ Replace with a hand‑rolled FlatList + local state stack.*
-* UI kits / icons / design‑systems (Paper, NativeBase, Tamagui, SVGs).
-* Expo modules, CocoaPods, Gradle dependencies.
-* Any community gesture, animation, camera, file‑system, notification, or analytics library.
+- Navigation libraries (`react‑navigation`, `react‑native‑navigation`, etc.)
+  _→ Replace with a hand‑rolled FlatList + local state stack._
+- UI kits / icons / design‑systems (Paper, NativeBase, Tamagui, SVGs).
+- Expo modules, CocoaPods, Gradle dependencies.
+- Any community gesture, animation, camera, file‑system, notification, or analytics library.
 
 ---
 
@@ -83,9 +83,9 @@ It captures **everything React Native offers out‑of‑the‑box** (no Expo�
    └─ …one file per feature
 ```
 
-* **Navigation**: state‑driven (`activeDemo`), custom back button.
-* **Styling**: `StyleSheet.create`, Flexbox only.
-* **Demo template**: every demo exports a functional component, self‑contained UI, 1‑2 paragraphs of inline explanation (just `Text`).
+- **Navigation**: state‑driven (`activeDemo`), custom back button.
+- **Styling**: `StyleSheet.create`, Flexbox only.
+- **Demo template**: every demo exports a functional component, self‑contained UI, 1‑2 paragraphs of inline explanation (just `Text`).
 
 ---
 
@@ -104,11 +104,11 @@ It captures **everything React Native offers out‑of‑the‑box** (no Expo�
 
 ## 7  Delivery & testing checklist
 
-* [ ] `npm run ios` launches without Xcode/Pod install steps.
-* [ ] `npm run android` builds on a clean clone with only Android SDK.
-* [ ] CI job (GitHub Actions) runs `npm run test:e2e` using Jest + React‑Native‑testing‑library **without** adding extra deps aside from dev‑tools.
-* [ ] Manual smoke test on real devices (iPhone 12, Pixel 5) verifying every demo opens and closes.
-* [ ] Markdown doc “How this maps to Flutter widgets” for parity reference.
+- [ ] `npm run ios` launches without Xcode/Pod install steps.
+- [ ] `npm run android` builds on a clean clone with only Android SDK.
+- [ ] CI job (GitHub Actions) runs `npm run test:e2e` using Jest + React‑Native‑testing‑library **without** adding extra deps aside from dev‑tools.
+- [ ] Manual smoke test on real devices (iPhone 12, Pixel 5) verifying every demo opens and closes.
+- [ ] Markdown doc “How this maps to Flutter widgets” for parity reference.
 
 ---
 

@@ -1,35 +1,33 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, Pressable, Alert } from 'react-native';
 
+const ModalContent = ({ title, onClose }: { title: string; onClose: () => void }) => (
+  <View style={styles.modalContent}>
+    <Text style={styles.modalTitle}>{title}</Text>
+    <Text style={styles.modalDescription}>
+      This modal demonstrates React Native's built-in Modal component.
+      Modals present content above the main interface.
+    </Text>
+    <Pressable style={styles.modalButton} onPress={onClose}>
+      <Text style={styles.modalButtonText}>Close Modal</Text>
+    </Pressable>
+    <Pressable style={[styles.modalButton, styles.alertButton]} onPress={() => {
+      Alert.alert(
+        'Modal Closed',
+        'This is a native alert triggered from modal',
+        [{ text: 'OK' }]
+      );
+    }}>
+      <Text style={styles.modalButtonText}>Show Alert</Text>
+    </Pressable>
+  </View>
+);
+
 const ModalDemo: React.FC = () => {
   const [basicModalVisible, setBasicModalVisible] = useState(false);
   const [slideModalVisible, setSlideModalVisible] = useState(false);
   const [fadeModalVisible, setFadeModalVisible] = useState(false);
   const [transparentModalVisible, setTransparentModalVisible] = useState(false);
-
-  const showAlert = () => {
-    Alert.alert(
-      'Modal Closed',
-      'This is a native alert triggered from modal',
-      [{ text: 'OK' }]
-    );
-  };
-
-  const ModalContent = ({ title, onClose }: { title: string; onClose: () => void }) => (
-    <View style={styles.modalContent}>
-      <Text style={styles.modalTitle}>{title}</Text>
-      <Text style={styles.modalDescription}>
-        This modal demonstrates React Native's built-in Modal component.
-        Modals present content above the main interface.
-      </Text>
-      <Pressable style={styles.modalButton} onPress={onClose}>
-        <Text style={styles.modalButtonText}>Close Modal</Text>
-      </Pressable>
-      <Pressable style={[styles.modalButton, styles.alertButton]} onPress={showAlert}>
-        <Text style={styles.modalButtonText}>Show Alert</Text>
-      </Pressable>
-    </View>
-  );
 
   return (
     <View style={styles.container}>

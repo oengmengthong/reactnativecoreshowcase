@@ -5,8 +5,8 @@ const DarkModeListener: React.FC = () => {
   const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
 
   useEffect(() => {
-    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      setColorScheme(colorScheme);
+    const subscription = Appearance.addChangeListener(({ colorScheme: newColorScheme }) => {
+      setColorScheme(newColorScheme);
     });
 
     return () => subscription?.remove();

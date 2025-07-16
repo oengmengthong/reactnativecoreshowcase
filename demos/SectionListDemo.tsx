@@ -15,7 +15,7 @@ interface ContactSection {
 
 const SectionListDemo: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
-  const [sections, setSections] = useState<ContactSection[]>([
+  const [sections, _setSections] = useState<ContactSection[]>([
     {
       title: 'A',
       data: [

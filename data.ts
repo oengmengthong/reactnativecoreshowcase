@@ -64,6 +64,34 @@ export const demoScreens: DemoScreen[] = [
     component: require('./demos/ModalDemo').default,
     category: 'UI'
   },
+  {
+    id: 'button-demo',
+    title: 'Button Demo',
+    description: 'Basic button component with platform styling',
+    component: require('./demos/ButtonDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'switch-demo',
+    title: 'Switch Demo',
+    description: 'Boolean toggle switch component',
+    component: require('./demos/SwitchDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'touchablehighlight-demo',
+    title: 'TouchableHighlight Demo',
+    description: 'Touchable with highlight feedback',
+    component: require('./demos/TouchableHighlightDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'imagebackground-demo',
+    title: 'ImageBackground Demo',
+    description: 'Image as background container',
+    component: require('./demos/ImageBackgroundDemo').default,
+    category: 'UI'
+  },
   
   // Animation & Gesture
   {
@@ -164,6 +192,76 @@ export const demoScreens: DemoScreen[] = [
     title: 'Share Demo',
     description: 'Native sharing functionality',
     component: require('./demos/ShareDemo').default,
+    category: 'Platform'
+  },
+  {
+    id: 'backhandler-demo',
+    title: 'BackHandler Demo',
+    description: 'Android hardware back button handling',
+    component: require('./demos/BackHandlerDemo').default,
+    category: 'Platform'
+  },
+  {
+    id: 'appstate-demo',
+    title: 'AppState Demo',
+    description: 'Application state lifecycle management',
+    component: require('./demos/AppStateDemo').default,
+    category: 'Platform'
+  },
+  {
+    id: 'alert-demo',
+    title: 'Alert Demo',
+    description: 'Native alert dialogs with customizable options',
+    component: require('./demos/AlertDemo').default,
+    category: 'Platform'
+  },
+  {
+    id: 'linking-demo',
+    title: 'Linking Demo',
+    description: 'Deep linking and URL handling',
+    component: require('./demos/LinkingDemo').default,
+    category: 'Platform'
+  },
+  {
+    id: 'keyboard-avoiding-view-demo',
+    title: 'KeyboardAvoidingView Demo',
+    description: 'Keyboard-aware view with multiple behaviors',
+    component: require('./demos/KeyboardAvoidingViewDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'platform-demo',
+    title: 'Platform Demo',
+    description: 'Platform detection and platform-specific code',
+    component: require('./demos/PlatformDemo').default,
+    category: 'Platform'
+  },
+  {
+    id: 'permissions-android-demo',
+    title: 'PermissionsAndroid Demo',
+    description: 'Android runtime permissions management',
+    component: require('./demos/PermissionsAndroidDemo').default,
+    category: 'Platform'
+  },
+  {
+    id: 'interaction-manager-demo',
+    title: 'InteractionManager Demo',
+    description: 'Schedule tasks after interactions complete',
+    component: require('./demos/InteractionManagerDemo').default,
+    category: 'Utility'
+  },
+  {
+    id: 'accessibility-info-demo',
+    title: 'AccessibilityInfo Demo',
+    description: 'Accessibility settings and announcements',
+    component: require('./demos/AccessibilityInfoDemo').default,
+    category: 'Platform'
+  },
+  {
+    id: 'toast-android-demo',
+    title: 'ToastAndroid Demo',
+    description: 'Android toast notifications and positioning',
+    component: require('./demos/ToastAndroidDemo').default,
     category: 'Platform'
   },
   {

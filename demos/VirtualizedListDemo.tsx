@@ -25,8 +25,8 @@ const VirtualizedListDemo: React.FC = () => {
 
   const [data, setData] = useState<DataItem[]>(generateData(1000));
 
-  const getItem = (data: DataItem[], index: number) => data[index];
-  const getItemCount = (data: DataItem[]) => data.length;
+  const getItem = (listData: DataItem[], index: number) => listData[index];
+  const getItemCount = (listData: DataItem[]) => listData.length;
   const keyExtractor = (item: DataItem) => item.id;
 
   const onRefresh = () => {
@@ -138,7 +138,7 @@ const VirtualizedListDemo: React.FC = () => {
         style={styles.list}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={true}
-        getItemLayout={(data, index) => ({
+        getItemLayout={(_, index) => ({
           length: 120,
           offset: 120 * index,
           index,

@@ -41,13 +41,13 @@ const SafeAreaViewDemo: React.FC = () => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Different Safe Area Edges</Text>
-        <SafeAreaView style={[styles.safeContainer, { backgroundColor: '#E8F5E8' }]}>
+        <SafeAreaView style={[styles.safeContainer, styles.greenBackground]}>
           <Text style={styles.safeText}>All edges (default)</Text>
         </SafeAreaView>
-        <SafeAreaView style={[styles.safeContainer, { backgroundColor: '#F5E8E8' }]}>
+        <SafeAreaView style={[styles.safeContainer, styles.redBackground]}>
           <Text style={styles.safeText}>Top edge only</Text>
         </SafeAreaView>
-        <SafeAreaView style={[styles.safeContainer, { backgroundColor: '#E8E8F5' }]}>
+        <SafeAreaView style={[styles.safeContainer, styles.blueBackground]}>
           <Text style={styles.safeText}>Bottom edge only</Text>
         </SafeAreaView>
       </View>
@@ -190,6 +190,15 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 8,
     lineHeight: 20,
+  },
+  greenBackground: {
+    backgroundColor: '#E8F5E8',
+  },
+  redBackground: {
+    backgroundColor: '#F5E8E8',
+  },
+  blueBackground: {
+    backgroundColor: '#E8E8F5',
   },
 });
 

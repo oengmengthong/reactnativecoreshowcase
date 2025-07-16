@@ -12,7 +12,7 @@ const ClipboardCopyPaste: React.FC = () => {
       await Clipboard.setString(sampleText);
       setCopiedText(sampleText);
       Alert.alert('Success', 'Text copied to clipboard!');
-    } catch (error) {
+    } catch {
       Alert.alert('Error', 'Failed to copy text');
     }
   };
@@ -21,7 +21,7 @@ const ClipboardCopyPaste: React.FC = () => {
     try {
       const content = await Clipboard.getString();
       setClipboardContent(content);
-    } catch (error) {
+    } catch {
       Alert.alert('Error', 'Failed to read clipboard');
     }
   };
