@@ -1,12 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Platform, Pressable, Alert, ScrollView, PermissionsAndroid } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, Platform, Pressable, Alert, ScrollView } from 'react-native';
 
 const PermissionsAndroidDemo: React.FC = () => {
   const [permissions, setPermissions] = useState<{[key: string]: string}>({});
   const [supportedPermissions, setSupportedPermissions] = useState<string[]>([]);
 
+  // Get PermissionsAndroid safely
+  const getPermissionsAndroid = () => {
+    if (Platform.OS !== 'android') return null;
+    try {
+      return require('react-native').PermissionsAndroid;
+    } catch {
+      return null;
+    }
+  };
+
+  const checkMultiplePermissions = useCallback(async (permissionList: string[]) => {
+    const PermissionsAndroid = getPermissionsAndroid();
+    if (!PermissionsAndroid) return;
+    
+    try {
+      const results: {[key: string]: string} = {};
+      for (const permission of permissionList) {
+        const result = await PermissionsAndroid.check(permission as any);
+        results[permission] = result ? PermissionsAndroid.RESULTS.GRANTED : PermissionsAndroid.RESULTS.DENIED;
+      }
+      setPermissions(results);
+    } catch {
+      console.error('Error checking permissions');
+    }
+  }, []);
+
   useEffect(() => {
-    if (Platform.OS === 'android') {
+    const PermissionsAndroid = getPermissionsAndroid();
+    
+    if (PermissionsAndroid) {
       // Get commonly used permissions
       const commonPermissions = [
         PermissionsAndroid.PERMISSIONS.CAMERA,
@@ -24,25 +52,11 @@ const PermissionsAndroidDemo: React.FC = () => {
       // Check initial permission states
       checkMultiplePermissions(commonPermissions);
     }
-  }, []);
-
-  const checkMultiplePermissions = async (permissionList: string[]) => {
-    if (Platform.OS !== 'android') return;
-    
-    try {
-      const results: {[key: string]: string} = {};
-      for (const permission of permissionList) {
-        const result = await PermissionsAndroid.check(permission as any);
-        results[permission] = result ? PermissionsAndroid.RESULTS.GRANTED : PermissionsAndroid.RESULTS.DENIED;
-      }
-      setPermissions(results);
-    } catch {
-      console.error('Error checking permissions');
-    }
-  };
+  }, [checkMultiplePermissions]);
 
   const checkSinglePermission = async (permission: string) => {
-    if (Platform.OS !== 'android') return;
+    const PermissionsAndroid = getPermissionsAndroid();
+    if (Platform.OS !== 'android' || !PermissionsAndroid) return;
     
     try {
       const result = await PermissionsAndroid.check(permission as any);
@@ -58,7 +72,8 @@ const PermissionsAndroidDemo: React.FC = () => {
   };
 
   const requestSinglePermission = async (permission: string) => {
-    if (Platform.OS !== 'android') return;
+    const PermissionsAndroid = getPermissionsAndroid();
+    if (Platform.OS !== 'android' || !PermissionsAndroid) return;
     
     try {
       const result = await PermissionsAndroid.request(
@@ -84,7 +99,8 @@ const PermissionsAndroidDemo: React.FC = () => {
   };
 
   const requestMultiplePermissions = async () => {
-    if (Platform.OS !== 'android') return;
+    const PermissionsAndroid = getPermissionsAndroid();
+    if (Platform.OS !== 'android' || !PermissionsAndroid) return;
     
     try {
       const permissionsToRequest = [
@@ -133,12 +149,16 @@ const PermissionsAndroidDemo: React.FC = () => {
   };
 
   const getPermissionStatus = (permission: string): string => {
+    const PermissionsAndroid = getPermissionsAndroid();
+    if (!PermissionsAndroid) return 'Not Available';
     const status = permissions[permission];
     if (status === undefined) return 'Unknown';
     return status === PermissionsAndroid.RESULTS.GRANTED ? 'Granted' : 'Denied';
   };
 
   const getStatusColor = (permission: string): string => {
+    const PermissionsAndroid = getPermissionsAndroid();
+    if (!PermissionsAndroid) return '#666';
     const status = permissions[permission];
     if (status === undefined) return '#666';
     return status === PermissionsAndroid.RESULTS.GRANTED ? '#4CAF50' : '#F44336';

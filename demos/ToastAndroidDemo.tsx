@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Platform, Pressable, ScrollView, ToastAndroid } from 'react-native';
+import { View, Text, StyleSheet, Platform, Pressable, ScrollView } from 'react-native';
+
+// Conditionally import ToastAndroid only on Android
+let ToastAndroid: any = null;
+if (Platform.OS === 'android') {
+  ToastAndroid = require('react-native').ToastAndroid;
+}
 
 const ToastAndroidDemo: React.FC = () => {
   const [toastCount, setToastCount] = useState(0);
   const [lastToastMessage, setLastToastMessage] = useState<string>('');
 
-  const showToast = (message: string, duration: number = ToastAndroid.SHORT) => {
-    if (Platform.OS === 'android') {
+  const showToast = (message: string, duration: number = ToastAndroid?.SHORT) => {
+    if (Platform.OS === 'android' && ToastAndroid) {
       ToastAndroid.show(message, duration);
       setToastCount(prev => prev + 1);
       setLastToastMessage(message);
@@ -14,7 +20,7 @@ const ToastAndroidDemo: React.FC = () => {
   };
 
   const showToastWithGravity = (message: string, duration: number, gravity: number) => {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' && ToastAndroid) {
       ToastAndroid.showWithGravity(message, duration, gravity);
       setToastCount(prev => prev + 1);
       setLastToastMessage(message);
@@ -28,7 +34,7 @@ const ToastAndroidDemo: React.FC = () => {
     xOffset: number,
     yOffset: number
   ) => {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' && ToastAndroid) {
       ToastAndroid.showWithGravityAndOffset(message, duration, gravity, xOffset, yOffset);
       setToastCount(prev => prev + 1);
       setLastToastMessage(message);
@@ -36,32 +42,32 @@ const ToastAndroidDemo: React.FC = () => {
   };
 
   const showBasicToasts = () => {
-    showToast('Basic SHORT toast', ToastAndroid.SHORT);
+    showToast('Basic SHORT toast', ToastAndroid?.SHORT);
     setTimeout(() => {
-      showToast('Basic LONG toast', ToastAndroid.LONG);
+      showToast('Basic LONG toast', ToastAndroid?.LONG);
     }, 1000);
   };
 
   const showGravityToasts = () => {
-    showToastWithGravity('TOP toast', ToastAndroid.SHORT, ToastAndroid.TOP);
+    showToastWithGravity('TOP toast', ToastAndroid?.SHORT, ToastAndroid?.TOP);
     setTimeout(() => {
-      showToastWithGravity('BOTTOM toast', ToastAndroid.SHORT, ToastAndroid.BOTTOM);
+      showToastWithGravity('BOTTOM toast', ToastAndroid?.SHORT, ToastAndroid?.BOTTOM);
     }, 1000);
     setTimeout(() => {
-      showToastWithGravity('CENTER toast', ToastAndroid.SHORT, ToastAndroid.CENTER);
+      showToastWithGravity('CENTER toast', ToastAndroid?.SHORT, ToastAndroid?.CENTER);
     }, 2000);
   };
 
   const showOffsetToasts = () => {
-    showToastWithGravityAndOffset('Left offset toast', ToastAndroid.SHORT, ToastAndroid.CENTER, -100, 0);
+    showToastWithGravityAndOffset('Left offset toast', ToastAndroid?.SHORT, ToastAndroid?.CENTER, -100, 0);
     setTimeout(() => {
-      showToastWithGravityAndOffset('Right offset toast', ToastAndroid.SHORT, ToastAndroid.CENTER, 100, 0);
+      showToastWithGravityAndOffset('Right offset toast', ToastAndroid?.SHORT, ToastAndroid?.CENTER, 100, 0);
     }, 1000);
     setTimeout(() => {
-      showToastWithGravityAndOffset('Up offset toast', ToastAndroid.SHORT, ToastAndroid.CENTER, 0, -100);
+      showToastWithGravityAndOffset('Up offset toast', ToastAndroid?.SHORT, ToastAndroid?.CENTER, 0, -100);
     }, 2000);
     setTimeout(() => {
-      showToastWithGravityAndOffset('Down offset toast', ToastAndroid.SHORT, ToastAndroid.CENTER, 0, 100);
+      showToastWithGravityAndOffset('Down offset toast', ToastAndroid?.SHORT, ToastAndroid?.CENTER, 0, 100);
     }, 3000);
   };
 
@@ -81,13 +87,13 @@ const ToastAndroidDemo: React.FC = () => {
 
     messages.forEach((message, index) => {
       setTimeout(() => {
-        showToast(message, index % 2 === 0 ? ToastAndroid.SHORT : ToastAndroid.LONG);
+        showToast(message, index % 2 === 0 ? ToastAndroid?.SHORT : ToastAndroid?.LONG);
       }, index * 800);
     });
   };
 
   const showInteractiveDemo = () => {
-    showToast('Tap this toast area to dismiss', ToastAndroid.LONG);
+    showToast('Tap this toast area to dismiss', ToastAndroid?.LONG);
   };
 
   if (Platform.OS !== 'android') {

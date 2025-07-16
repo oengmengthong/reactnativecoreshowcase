@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, Alert, BackHandler, Platform } from 'react-native';
+import { View, Text, StyleSheet, Alert, Platform } from 'react-native';
+
+// Conditionally import BackHandler only on Android
+let BackHandler: any = null;
+if (Platform.OS === 'android') {
+  BackHandler = require('react-native').BackHandler;
+}
 
 const BackHandlerDemo: React.FC = () => {
   const [backPressCount, setBackPressCount] = useState(0);
@@ -19,7 +25,7 @@ const BackHandlerDemo: React.FC = () => {
         },
         {
           text: 'Exit App',
-          onPress: () => BackHandler.exitApp(),
+          onPress: () => BackHandler?.exitApp(),
           style: 'destructive',
         },
       ]
@@ -30,7 +36,7 @@ const BackHandlerDemo: React.FC = () => {
   }, [backPressCount]);
 
   useEffect(() => {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' && BackHandler) {
       const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
       setIsHandlerActive(true);
 
@@ -52,7 +58,7 @@ const BackHandlerDemo: React.FC = () => {
         },
         {
           text: 'Exit',
-          onPress: () => BackHandler.exitApp(),
+          onPress: () => BackHandler?.exitApp(),
           style: 'destructive',
         },
       ]

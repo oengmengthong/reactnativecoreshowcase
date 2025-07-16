@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   SafeAreaView,
   View,
   Text,
-  FlatList,
+  SectionList,
   StyleSheet,
   StatusBar,
   Pressable,
@@ -14,23 +14,45 @@ import { demoScreens, DemoScreen } from './data';
 interface NavigationState {
   activeDemo: string | null;
   history: string[];
+  scrollOffset: number;
+}
+
+interface SectionData {
+  title: string;
+  data: DemoScreen[];
 }
 
 const App: React.FC = () => {
   const [navigation, setNavigation] = useState<NavigationState>({
     activeDemo: null,
     history: [],
+    scrollOffset: 0,
   });
+  
+  const sectionListRef = useRef<SectionList<DemoScreen, SectionData>>(null);
+  const scrollOffsetRef = useRef(0); // Use ref to avoid frequent state updates
   
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
 
-  const navigateToDemo = (demoId: string) => {
-    setNavigation(prev => ({
-      activeDemo: demoId,
-      history: [...prev.history, demoId],
+  // Group demos by category
+  const groupedDemos = () => {
+    const categories = ['UI', 'Animation', 'Platform', 'Utility'];
+    return categories.map(category => ({
+      title: category,
+      data: demoScreens.filter(demo => demo.category === category),
     }));
   };
+
+  const navigateToDemo = useCallback((demoId: string) => {
+    // Save current scroll position before navigating
+    setNavigation(prev => ({
+      ...prev,
+      activeDemo: demoId,
+      history: [...prev.history, demoId],
+      scrollOffset: scrollOffsetRef.current,
+    }));
+  }, []);
 
   const goBack = () => {
     if (navigation.history.length > 0) {
@@ -38,14 +60,20 @@ const App: React.FC = () => {
       newHistory.pop();
       const previousDemo = newHistory[newHistory.length - 1] || null;
       
-      setNavigation({
+      setNavigation(prev => ({
         activeDemo: previousDemo,
         history: newHistory,
-      });
+        scrollOffset: prev.scrollOffset,
+      }));
     }
   };
 
-  const renderDemoItem = ({ item }: { item: DemoScreen }) => (
+  const handleScroll = useCallback((event: any) => {
+    // Update ref instead of state to avoid frequent re-renders
+    scrollOffsetRef.current = event.nativeEvent.contentOffset.y;
+  }, []);
+
+  const renderDemoItem = useCallback(({ item }: { item: DemoScreen }) => (
     <Pressable
       style={[styles.demoItem, isDark && styles.darkDemoItem]}
       onPress={() => navigateToDemo(item.id)}
@@ -57,12 +85,17 @@ const App: React.FC = () => {
         <Text style={[styles.demoDescription, isDark && styles.darkSecondaryText]}>
           {item.description}
         </Text>
-        <Text style={[styles.demoCategory, getCategoryColor(item.category)]}>
-          {item.category}
-        </Text>
       </View>
     </Pressable>
-  );
+  ), [isDark, navigateToDemo]);
+
+  const renderSectionHeader = useCallback(({ section }: { section: SectionData }) => (
+    <View style={[styles.sectionHeader, isDark && styles.darkSectionHeader]}>
+      <Text style={[styles.sectionTitle, isDark && styles.darkText, getCategoryColor(section.title)]}>
+        {section.title}
+      </Text>
+    </View>
+  ), [isDark]);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -116,12 +149,22 @@ const App: React.FC = () => {
         </Text>
       </View>
       
-      <FlatList
-        data={demoScreens}
+      <SectionList<DemoScreen, SectionData>
+        ref={sectionListRef}
+        sections={groupedDemos()}
         renderItem={renderDemoItem}
-        keyExtractor={(item) => item.id}
+        renderSectionHeader={renderSectionHeader}
+        keyExtractor={(item: DemoScreen) => item.id}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
+        stickySectionHeadersEnabled={true}
+        onScroll={handleScroll}
+        scrollEventThrottle={100}
+        contentOffset={{ x: 0, y: navigation.scrollOffset }}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={10}
+        windowSize={10}
+        initialNumToRender={8}
       />
     </SafeAreaView>
   );
@@ -177,13 +220,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   listContainer: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 20,
   },
   demoItem: {
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 20,
-    marginBottom: 15,
+    marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -208,19 +253,31 @@ const styles = StyleSheet.create({
   demoDescription: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 10,
-  },
-  demoCategory: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    alignSelf: 'flex-start',
+    marginBottom: 5,
   },
   darkText: {
     color: '#fff',
   },
   darkSecondaryText: {
     color: '#ccc',
+  },
+  sectionHeader: {
+    backgroundColor: '#f8f9fa',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+    marginBottom: 10,
+  },
+  darkSectionHeader: {
+    backgroundColor: '#2a2a2a',
+    borderBottomColor: '#555',
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
 });
 
