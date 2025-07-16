@@ -9,6 +9,13 @@ export interface DemoScreen {
 export const demoScreens: DemoScreen[] = [
   // UI / Layout primitives
   {
+    id: 'layout-flexbox',
+    title: 'Layout & Flexbox',
+    description: 'Interactive Flexbox layout demonstration',
+    component: require('./demos/LayoutFlexbox').default,
+    category: 'UI'
+  },
+  {
     id: 'view-basics',
     title: 'View Basics',
     description: 'Basic View component with styling and layout',
@@ -109,6 +116,62 @@ export const demoScreens: DemoScreen[] = [
     description: 'Device vibration patterns',
     component: require('./demos/VibrationDemo').default,
     category: 'Platform'
+  },
+  {
+    id: 'activityindicator-demo',
+    title: 'ActivityIndicator Demo',
+    description: 'Loading indicators with different styles',
+    component: require('./demos/ActivityIndicatorDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'image-demo',
+    title: 'Image Demo',
+    description: 'Display images from various sources',
+    component: require('./demos/ImageDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'safeareaview-demo',
+    title: 'SafeAreaView Demo',
+    description: 'Safe area handling for different devices',
+    component: require('./demos/SafeAreaViewDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'statusbar-demo',
+    title: 'StatusBar Demo',
+    description: 'Status bar styling and configuration',
+    component: require('./demos/StatusBarDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'sectionlist-demo',
+    title: 'SectionList Demo',
+    description: 'Grouped data display with sections',
+    component: require('./demos/SectionListDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'touchableopacity-demo',
+    title: 'TouchableOpacity Demo',
+    description: 'Touchable elements with opacity feedback',
+    component: require('./demos/TouchableOpacityDemo').default,
+    category: 'UI'
+  },
+  {
+    id: 'share-demo',
+    title: 'Share Demo',
+    description: 'Native sharing functionality',
+    component: require('./demos/ShareDemo').default,
+    category: 'Platform'
+  },
+  {
+    id: 'virtualizedlist-demo',
+    title: 'VirtualizedList Demo',
+    description: 'Efficient rendering of large datasets',
+    component: require('./demos/VirtualizedListDemo').default,
+    category: 'UI'
   },
   
   // Utilities
